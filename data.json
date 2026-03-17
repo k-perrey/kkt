@@ -1,1 +1,7 @@
-
+{
+  "coups": [
+    { "accel": 150, "dist": 10 },
+    { "accel": 90, "dist": 12 },
+    { "accel": 200, "dist": 5 }
+  ]
+}
