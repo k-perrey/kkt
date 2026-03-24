@@ -22,18 +22,26 @@
 
     <script>
         // CONFIGURATION : Remplace par l'URL de ta base Firebase
-        const firebaseConfig = {
-            databaseURL: "TON_URL_FIREBASE_ICI" 
-        };
+       // Ta configuration spécifique
+const firebaseConfig = {
+    databaseURL: "https://kkt-sin-default-rtdb.europe-west1.firebasedatabase.app/" 
+};
 
-        // Initialisation de Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+// Initialisation
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-        // Écoute du tag "score" (le même que dans tes blocs App Inventor)
-        database.ref('score').on('value', (snapshot) => {
-            const data = snapshot.val(); // Récupération de la donnée
-            document.getElementById('score').innerText = data; // Mise à jour du texte HTML
+// On écoute le tag "score" que tu as mis dans tes blocs App Inventor
+database.ref('score').on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data !== null) {
+        document.getElementById('score').innerText = data;
+    } else {
+        document.getElementById('score').innerText = "Pas de donnée";
+    }
+
+
+      
         });
     </script>
 </body>
