@@ -14,24 +14,28 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .arcade-container {
-            border: 6px solid #FF0000;
-            padding: 40px;
+            border: 4px solid #FF0000;
+            padding: 20px;
             background: #000000;
             box-shadow: 0 0 15px #FF0000, inset 0 0 10px #FF0000; 
             text-align: center;
+            width: 90%;
+            max-width: 600px;
+            box-sizing: border-box;
         }
 
         h1 {
             color: #FF0000;
-            font-size: 3.5rem;
-            margin-bottom: 30px;
-            letter-spacing: 5px;
+            font-size: 8vw;
+            max-size: 3.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
             text-shadow: 2px 2px #FFFFFF;
         }
 
@@ -46,18 +50,19 @@
         .score-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
         }
 
         .score-table th {
-            border-bottom: 4px solid #FFFFFF;
+            border-bottom: 3px solid #FFFFFF;
             color: #FFFFFF;
-            padding: 15px;
-            letter-spacing: 2px;
+            padding: 10px 5px;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .score-table td {
-            padding: 15px 40px;
+            padding: 12px 5px;
             border-bottom: 1px solid #333333;
         }
 
@@ -68,12 +73,20 @@
         }
 
         .unit-status {
-            margin-top: 30px;
-            font-size: 0.9rem;
+            margin-top: 20px;
+            font-size: 0.7rem;
             color: #FFFFFF;
             text-transform: uppercase;
             border-top: 1px solid #FF0000;
             padding-top: 10px;
+        }
+
+        @media (min-width: 600px) {
+            h1 { font-size: 3.5rem; }
+            .score-table { font-size: 1.8rem; }
+            .score-table th { font-size: 1.2rem; }
+            .arcade-container { padding: 40px; border-width: 6px; }
+            .unit-status { font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -86,7 +99,7 @@
             <thead>
                 <tr>
                     <th>RANG</th>
-                    <th>COMBATTANT KKT</th>
+                    <th>PUNCHER</th>
                     <th>SCORE</th>
                 </tr>
             </thead>
@@ -98,13 +111,15 @@
                 <tr><td>5TH</td><td>WAITING...</td><td class="score-val">0</td></tr>
             </tbody>
         </table>
+
+        <p class="unit-status" id="unit-text">UNITÉ : EN ATTENTE</p>
     </main>
 
     <script>
         async function loadHighScores() {
             try {
                 const response = await fetch('data.json?t=' + Date.now());
-                if (!response.ok) throw new Error("Fichier non trouvé");
+                if (!response.ok) throw new Error("Erreur");
                 
                 const data = await response.json();
                 let coups = data.coups;
@@ -123,6 +138,7 @@
                     }
                 }
                 
+                document.getElementById("unit-text").innerText = "UNITÉ : ACCÉLÉRATION (m/s²)";
 
             } catch (error) {
                 console.log("Erreur");
