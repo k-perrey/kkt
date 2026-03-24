@@ -2,6 +2,45 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Dashboard Projet SIN</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background: #2c3e50; color: white; padding-top: 50px; }
+        .card { background: #34495e; padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #score { font-size: 80px; color: #f1c40f; margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Score en Temps Réel</h1>
+        <div id="score">0</div>
+        <p>Mise à jour automatique via Firebase</p>
+    </div>
+
+    <script>
+        // CONFIGURATION : Remplace par l'URL de ta base Firebase
+        const firebaseConfig = {
+            databaseURL: "TON_URL_FIREBASE_ICI" 
+        };
+
+        // Initialisation de Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Écoute du tag "score" (le même que dans tes blocs App Inventor)
+        database.ref('score').on('value', (snapshot) => {
+            const data = snapshot.val(); // Récupération de la donnée
+            document.getElementById('score').innerText = data; // Mise à jour du texte HTML
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>High Scores - Projet SIN</title>
     <style>
