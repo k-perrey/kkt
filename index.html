@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>High Scores - Projet SIN</title>
     <style>
-        /* Importation d'une police typée arcade/monospace */
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@700&display=swap');
 
         body {
-            background-color: #000000; /* Fond noir pur */
-            color: #FFFFFF; /* Texte blanc pour la lisibilité */
-            font-family: 'Courier Prime', monospace; /* Police à espacement fixe */
-            display: flex; /* Centrage du conteneur sur la page */
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: 'Courier Prime', monospace;
+            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -20,25 +19,22 @@
             overflow: hidden;
         }
 
-        /* Conteneur principal avec la charte Rouge/Noir/Blanc */
         .arcade-container {
-            border: 6px solid #FF0000; /* Bordure rouge vif */
+            border: 6px solid #FF0000;
             padding: 40px;
             background: #000000;
-            /* Effet d'ombre portée rouge pour le style rétro */
             box-shadow: 0 0 15px #FF0000, inset 0 0 10px #FF0000; 
             text-align: center;
         }
 
         h1 {
-            color: #FF0000; /* Titre en rouge */
+            color: #FF0000;
             font-size: 3.5rem;
             margin-bottom: 30px;
             letter-spacing: 5px;
-            text-shadow: 2px 2px #FFFFFF; /* Ombre blanche pour faire ressortir le texte */
+            text-shadow: 2px 2px #FFFFFF;
         }
 
-        /* Animation de clignotement classique */
         .blink {
             animation: blinker 1.2s linear infinite;
         }
@@ -47,35 +43,30 @@
             50% { opacity: 0; }
         }
 
-        /* Mise en forme de la table des scores */
         .score-table {
             width: 100%;
-            border-collapse: collapse; /* Fusion des bordures de cellules */
+            border-collapse: collapse;
             font-size: 1.8rem;
         }
 
-        /* En-tête de colonne */
         .score-table th {
-            border-bottom: 4px solid #FFFFFF; /* Séparation blanche */
+            border-bottom: 4px solid #FFFFFF;
             color: #FFFFFF;
             padding: 15px;
             letter-spacing: 2px;
         }
 
-        /* Cellules de données */
         .score-table td {
             padding: 15px 40px;
-            border-bottom: 1px solid #333333; /* Ligne discrète entre les lignes */
+            border-bottom: 1px solid #333333;
         }
 
-        /* Valeur du score mise en avant en rouge */
         .score-val {
             color: #FF0000;
             font-weight: bold;
             text-shadow: 1px 1px #FFFFFF;
         }
 
-        /* Information sur l'unité de mesure épurée */
         .unit-status {
             margin-top: 30px;
             font-size: 0.9rem;
@@ -100,31 +91,11 @@
                 </tr>
             </thead>
             <tbody id="score-body">
-                <tr>
-                    <td>1ST</td>
-                    <td>WAITING...</td>
-                    <td class="score-val">0</td>
-                </tr>
-                <tr>
-                    <td>2ND</td>
-                    <td>WAITING...</td>
-                    <td class="score-val">0</td>
-                </tr>
-                <tr>
-                    <td>3RD</td>
-                    <td>WAITING...</td>
-                    <td class="score-val">0</td>
-                </tr>
-                <tr>
-                    <td>4TH</td>
-                    <td>WAITING...</td>
-                    <td class="score-val">0</td>
-                </tr>
-                <tr>
-                    <td>5TH</td>
-                    <td>WAITING...</td>
-                    <td class="score-val">0</td>
-                </tr>
+                <tr><td>1ST</td><td>WAITING...</td><td class="score-val">0</td></tr>
+                <tr><td>2ND</td><td>WAITING...</td><td class="score-val">0</td></tr>
+                <tr><td>3RD</td><td>WAITING...</td><td class="score-val">0</td></tr>
+                <tr><td>4TH</td><td>WAITING...</td><td class="score-val">0</td></tr>
+                <tr><td>5TH</td><td>WAITING...</td><td class="score-val">0</td></tr>
             </tbody>
         </table>
 
@@ -134,24 +105,19 @@
     <script>
         async function loadHighScores() {
             try {
-                // Récupération du fichier JSON (le paramètre t évite que le navigateur garde une vieille version en cache)
                 const response = await fetch('data.json?t=' + Date.now());
                 if (!response.ok) throw new Error("Fichier non trouvé");
                 
                 const data = await response.json();
                 let coups = data.coups;
 
-                // Tri des coups : du plus grand au plus petit basé sur l'accélération
                 coups.sort((a, b) => b.accel - a.accel);
 
-                // Récupération des lignes du tableau
                 const rows = document.querySelectorAll("#score-body tr");
 
-                // Mise à jour des 5 meilleurs scores
                 for (let i = 0; i < 5; i++) {
                     if (coups[i]) {
-                        rows[i].cells[1].innerText = "PUNCHER_" + (i + 1);
-                        // Affichage de l'accélération (arrondie)
+                        rows[i].cells[1].innerText = coups[i].nom || "PUNCHER_" + (i + 1);
                         rows[i].cells[2].innerText = Math.round(coups[i].accel);
                     }
                 }
@@ -159,14 +125,11 @@
                 document.getElementById("unit-text").innerText = "UNITÉ : ACCÉLÉRATION (m/s²)";
 
             } catch (error) {
-                console.log("En attente de données valides dans data.json...");
+                console.log("Erreur de chargement des données");
             }
         }
 
-        // Charger les données dès l'ouverture
         loadHighScores();
-
-        // Vérifier les nouvelles données toutes les 5 secondes
         setInterval(loadHighScores, 5000);
     </script>
 
