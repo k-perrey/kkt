@@ -1,7 +1,5 @@
 {
   "coups": [
-    { "accel": 150, "dist": 10, "nom": "ROCKY" },
-    { "accel": 90, "dist": 12, "nom": "APOLLO" },
-    { "accel": 120, "dist": 5, "nom": "DRAGO" }
+    { "accel": 0, "dist": 0, "nom": "START" }
   ]
 }
