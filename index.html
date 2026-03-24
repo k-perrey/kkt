@@ -119,13 +119,16 @@
                     if (coups[i]) {
                         rows[i].cells[1].innerText = coups[i].nom || "PUNCHER_" + (i + 1);
                         rows[i].cells[2].innerText = Math.round(coups[i].accel);
+                    } else {
+                        rows[i].cells[1].innerText = "WAITING...";
+                        rows[i].cells[2].innerText = "0";
                     }
                 }
                 
                 document.getElementById("unit-text").innerText = "UNITÉ : ACCÉLÉRATION (m/s²)";
 
             } catch (error) {
-                console.log("Erreur de chargement des données");
+                console.log("Erreur");
             }
         }
 
